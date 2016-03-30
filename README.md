@@ -1,0 +1,66 @@
+**Escuela Colombiana de Ingeniería**
+
+**Construcción de Software – COSW**
+
+**Frameworks de persistencia ORM**
+
+**TRABAJO INDIVIDUAL**
+
+
+El diagrama de la figura 1 corresponde a un modelo ER para un sistema de
+envío de pedidos, para el cual ya se generó (mediante ingeniería inversa
+y algunos ajustes) un modelo de clases mapeado para hacerlo persistente
+(figura 2). Adicionalmente, se tiene una primera versión de un API REST que permite hacer consultas de productos, pedidos y despachos.
+
+![](./img/media/image1.png)
+
+Figura 1 Modelo ER
+
+![](./img/media/image2.png)
+
+Figura 2 - Modelo de clases mapeado
+
+
+##Parte I.##
+
+1. Revise el controlador de productos, e identifique a través de qué URL se podrá consultar -mediante una petición GET- se puede consultar el listado completo de productos.
+2. Inicie la aplicación y desde un navegador ingrese la URL correspondiente para consultar los productos. Qué particularidad encuentra en el resultado?. Observe que en este caso la relación entre Producto y DetallePedido es BIDIRECCIONAL, de manera que se está dando un 'loop' en la serialización de Objeto a JSON. Para resolver esto hay dos opciones
+	* Dejar la relación unidireccional.
+	* Agregar la anotación __@JsonIgnore__ en la propiedad que se quiera omitir en la serialización Objeto-JSON (es decir, en su método 'get' correspondiente). En este caso, lo deseable sería que al serializar el Producto, se ignore la colección de DetallePedido.
+
+	Aplique la segunda solución y verifique los resultados.
+
+3. Revise el controlador de pedidos e identifique con qué URL se pueden consultar las órdenes. De nuevo, pruebe la consulta a través de un navegador. Revise el error presentado, y busque en qué contexto se menciona la palabra 'Lazy'. Para resolver el problema, cambie la manera como JPA realiza las consultas que asocian los objetos relacionados directa e indirectamente con Pedido (DetallePedido, Cliente y Producto) cambiando el mecanismo de 'fetching' que por defecto se dan entre Pedido-Cliente, Pedido-DetallePedido y DetallePedido-Producto:
+
+	```java
+	@Fetch(FetchType.JOIN)
+```
+4. Pruebe que el API retorne correctamente las ordenes a través de un navegador.
+5. Revise el controlador de Despachos, e identifique la URL para la consultar un determinado despacho. Intente consultar el despacho #1 y analice el error obtenido.
+6. Use la anotación @JsonIgnore para que en la serialización de Objeto a JSON no se intente serializar el propiedad de tipo BLOB del despacho.
+
+7. En el mismo controlador, agregue una ruta que permita -exclusivamente- consultar la imagen del código QR asociado a un despacho (al igual se que había hecho en un ejercicio anterior):
+
+	```java
+    @RequestMapping(value = "/{id}/qrcode", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> getQRCode(@PathVariable Integer id) {
+		try {            
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType("image/png"))
+                    .body(new InputStreamResource(  INPUTSTREAM     ));
+        } catch (ServicesException ex) {
+            Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    
+    }
+```
+
+8. Modifique el código anterior para que en como INPUTSTREAM, se pase el InputStream de la propiedad de tipo Blob del Despacho. Es decir, debe usar los servicios inyectados para consultar el despacho respectivo, a y a éste consultar el InputStream de su propiedad 'qrcode'.
+
+9. Rectifique que a través del navegador se pueda consultar la imagen del código QR asociado a un despacho.
