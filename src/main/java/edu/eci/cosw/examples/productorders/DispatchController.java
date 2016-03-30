@@ -56,27 +56,5 @@ public class DispatchController {
         }
     }
 
-    @RequestMapping(value = "/{id}/qrcode", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<InputStreamResource> getQRCode(@PathVariable Integer id) {
-
-        Despacho d;
-        try {
-            d = services.dispatchByID(id);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType("image/png"))
-                    .body(new InputStreamResource(d.getQrcode().getBinaryStream()));
-        } catch (ServicesException ex) {
-            Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-
-    }
-    
     
 }

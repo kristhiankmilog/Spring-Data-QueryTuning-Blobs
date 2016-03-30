@@ -23,8 +23,7 @@ public class Vehiculo implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 328754985741161521L;
 	private String placa;
-	private int capacidad;
-	private Set<Despacho> almDespachoses = new HashSet<Despacho>(0);
+	private int capacidad;	
 
 	public Vehiculo() {
 	}
@@ -32,12 +31,6 @@ public class Vehiculo implements java.io.Serializable {
 	public Vehiculo(String placa, int capacidad) {
 		this.placa = placa;
 		this.capacidad = capacidad;
-	}
-
-	public Vehiculo(String placa, int capacidad, Set<Despacho> almDespachoses) {
-		this.placa = placa;
-		this.capacidad = capacidad;
-		this.almDespachoses = almDespachoses;
 	}
 
 	@Id
@@ -57,15 +50,6 @@ public class Vehiculo implements java.io.Serializable {
 
 	public void setCapacidad(int capacidad) {
 		this.capacidad = capacidad;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
-	public Set<Despacho> getDespachos() {
-		return this.almDespachoses;
-	}
-
-	public void setDespachos(Set<Despacho> almDespachoses) {
-		this.almDespachoses = almDespachoses;
 	}
 
 }

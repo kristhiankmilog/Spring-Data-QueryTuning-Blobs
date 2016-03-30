@@ -79,7 +79,6 @@ public class Despacho implements java.io.Serializable {
 	}
 
 	@Column(name = "qrcode")
-        @JsonIgnore
 	public Blob getQrcode() {
 		return this.qrcode;
 	}
