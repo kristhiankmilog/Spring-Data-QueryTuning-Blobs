@@ -74,7 +74,6 @@ Figura 2 - Modelo de clases mapeado
 	* Dado el identificador de un producto, determinar qué vehículos han transportado alguna vez dicho producto.
 	* Dado un valor en pesos, determinar qué clientes han comprado alguna vez productos con un valor superior al indicado.
 
-Realice los puntos 1 y 2, teniendo en cuenta las facilidades de Joins explícitos de JPA.
 
 3. Cree (si no lo tiene aún) el repositorio de vehículos, y agregue en éste una consulta (@Query) que reciba como parámetro el identificador de un producto y que retorne un listado de vehículos. Asocie a ésta la primera consulta.
 
