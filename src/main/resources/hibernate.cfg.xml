@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://desarrollo.is.escuelaing.edu.co:3306/bdprueba?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">bdprueba</property>
+    <property name="hibernate.connection.password">bdprueba</property>
+    <mapping class="edu.eci.cosw.samples.model.Cliente"/>
+    <mapping class="edu.eci.cosw.samples.model.Despacho"/>
+    <mapping class="edu.eci.cosw.samples.model.Pedido"/>
+    <mapping class="edu.eci.cosw.samples.model.DetallePedido"/>
+    <mapping class="edu.eci.cosw.samples.model.Producto"/>
+    <mapping class="edu.eci.cosw.samples.model.Vehiculo"/>
+  </session-factory>
+</hibernate-configuration>
