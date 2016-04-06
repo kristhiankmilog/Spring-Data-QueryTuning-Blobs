@@ -67,14 +67,18 @@ Figura 2 - Modelo de clases mapeado
 
 ##Parte II.##
 
-Realice los puntos 1 y 2, teniendo en cuenta las facilidades de Joins explícitos de JPA.
+1. Abra el cliente HQL de NetBeans, haciendo clic derecho sobre el archivo 'hibernate.cfg.xml' (si no está en su proyecto, puede copiarlo de este repositorio de la ruta src/main/resources): ![](img/HQLClient.png)
 
-1. Cree (si no lo tiene aún) el repositorio de vehículos, y agregue en éste una consulta (@Query) que reciba como parámetro el identificador de un producto y que retorne un listado de vehículos, los cuales cumplen con lo siguiente:
+2. Diseñe las siguientes consultas HQL, haciendo uso de las facilidades de [Joins explícitos](https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html#queryhql-joins) de JPA:
 
 	* Dado el identificador de un producto, determinar qué vehículos han transportado alguna vez dicho producto.
-
-2. Cree el repositorio de Clientes, y agregue en éste una consulta (@Query) que reciba como parámetro un entero, y y que retorne una lista de Clientes, de manera que estos últimos cumplan con:
 	* Dado un valor en pesos, determinar qué clientes han comprado alguna vez productos con un valor superior al indicado.
+
+Realice los puntos 1 y 2, teniendo en cuenta las facilidades de Joins explícitos de JPA.
+
+3. Cree (si no lo tiene aún) el repositorio de vehículos, y agregue en éste una consulta (@Query) que reciba como parámetro el identificador de un producto y que retorne un listado de vehículos. Asocie a ésta la primera consulta.
+
+4. Cree el repositorio de Clientes, y agregue en éste una consulta (@Query) que reciba como parámetro un entero, y y que retorne una lista de Clientes. Asocie a ésta la segunda consulta.
 
 3. Agregue a su API REST un par de recursos que permitan acceder a dichas consultas.
 
@@ -120,4 +124,4 @@ public ResponseEntity uploadFile(MultipartHttpServletRequest request,@RequestPar
 }
 ```
 4. Complete lo que falta del código anterior para insertar un nuevo despacho.
-4. Rectifique que la URL a través de la cual se accedería al recurso antes creado, coincida con la utilizada por el cliente Angular.js (línea 50 del archivo 'modulo.js'). Pruebe la aplicación cargando una imagen pequeña en formato PNG, y luego consultándolo a través de la URI de códigos 'qr' realizada en el punto I.
+5. Rectifique que la URL a través de la cual se accedería al recurso antes creado, coincida con la utilizada por el cliente Angular.js (línea 50 del archivo 'modulo.js'). Pruebe la aplicación cargando una imagen pequeña en formato PNG, y luego consultándolo a través de la URI de códigos 'qr' realizada en el punto I.
