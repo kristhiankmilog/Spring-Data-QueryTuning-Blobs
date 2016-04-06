@@ -74,7 +74,7 @@ Figura 2 - Modelo de clases mapeado
 	value = "/upload",
 	method = RequestMethod.POST
 )
-public ResponseEntity uploadFile(MultipartHttpServletRequest request) {
+public ResponseEntity uploadFile(MultipartHttpServletRequest request,@RequestParam(name = "idpedido") int idpedido, @RequestParam(name = "idvehiculo") String idVehiculo) {
 
 	try {
 		Iterator<String> itr = request.getFileNames();
