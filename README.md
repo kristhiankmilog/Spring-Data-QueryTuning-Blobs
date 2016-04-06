@@ -4,7 +4,7 @@
 
 **Frameworks de persistencia ORM**
 
-**TRABAJO INDIVIDUAL**
+
 
 
 El diagrama de la figura 1 corresponde a un modelo ER para un sistema de
@@ -64,3 +64,37 @@ Figura 2 - Modelo de clases mapeado
 8. Modifique el código anterior para que en como INPUTSTREAM, se pase el InputStream de la propiedad de tipo Blob del Despacho. Es decir, debe usar los servicios inyectados para consultar el despacho respectivo, a y a éste consultar el InputStream de su propiedad 'qrcode'.
 
 9. Rectifique que a través del navegador se pueda consultar la imagen del código QR asociado a un despacho.
+
+##Parte II.##
+
+
+```java
+	
+@RequestMapping(
+	value = "/upload",
+	method = RequestMethod.POST
+)
+public ResponseEntity uploadFile(MultipartHttpServletRequest request) {
+
+	try {
+		Iterator<String> itr = request.getFileNames();
+
+			while (itr.hasNext()) {
+				String uploadedFile = itr.next();
+				MultipartFile file = request.getFile(uploadedFile);
+           
+				Pedido p=orderrepo.findOne(6);
+				Vehiculo v=vehicrepo.findOne("kkk333");
+                                                
+				Despacho d=new Despacho(p, v);
+				d.setQrcode(new SerialBlob(StreamUtils.copyToByteArray(file.getInputStream())));                                                
+				disprepo.save(d);
+		}
+	}
+	catch (Exception e) {
+		return new ResponseEntity<>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	return new ResponseEntity<>("{}", HttpStatus.OK);
+}
+```
