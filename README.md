@@ -67,9 +67,28 @@ Figura 2 - Modelo de clases mapeado
 
 ##Parte II.##
 
+Realice los puntos 1 y 2, teniendo en cuenta las facilidades de Joins explícitos de JPA.
 
-```java
-	
+1. Cree (si no lo tiene aún) el repositorio de vehículos, y agregue en éste una consulta (@Query) que reciba como parámetro el identificador de un producto y que retorne un listado de vehículos, los cuales cumplen con lo siguiente:
+
+	* Dado el identificador de un producto, determinar qué vehículos han transportado alguna vez dicho producto.
+
+2. Cree el repositorio de Clientes, y agregue en éste una consulta (@Query) que reciba como parámetro un entero, y y que retorne una lista de Clientes, de manera que estos últimos cumplan con:
+	* Dado un valor en pesos, determinar qué clientes han comprado alguna vez productos con un valor superior al indicado.
+
+3. Agregue a su API REST un par de recursos que permitan acceder a dichas consultas.
+
+
+##Parte III.##
+
+Ahora, va a crear en su API un servicio capaz de manejar peticiones de tipo 'multipart' (para enviar archivos binarios en lugar de documentos jSON). Esto se basa en una adaptación de dos blogs de [cantangoslutions.com](http://www.cantangosolutions.com/blog/Easy-File-Upload-Using-DropzoneJS-AngularJs-And-Spring) y 
+[uncorkedstudios.com](http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs):
+
+1. Si los fuentes de su proyecto no incluyen aún el cliente Angular.js, actualícelo con los fuentes de este repositorio (el cliente está en /src/main/resources/static).
+2. En sus servicios de aplicación, agregue una operación que permita registrar un nuevo despacho (la cual debe usar el Repositorio de despachos).
+3. Agregue el siguiente recurso a su API REST, en el controlador de Despachos. 
+
+	```java	
 @RequestMapping(
 	value = "/upload",
 	method = RequestMethod.POST
@@ -83,12 +102,14 @@ public ResponseEntity uploadFile(MultipartHttpServletRequest request,@RequestPar
 				String uploadedFile = itr.next();
 				MultipartFile file = request.getFile(uploadedFile);
            
-				Pedido p=orderrepo.findOne(6);
-				Vehiculo v=vehicrepo.findOne("kkk333");
+				Pedido p=orderrepo.findOne(idPedido);
+				Vehiculo v=vehicrepo.findOne(idVehiculo);
                                                 
 				Despacho d=new Despacho(p, v);
 				d.setQrcode(new SerialBlob(StreamUtils.copyToByteArray(file.getInputStream())));                                                
-				disprepo.save(d);
+
+				//-->> GUARDAR EL DESPACHO A TRAVÉS DEL SERVICIO CREADO
+
 		}
 	}
 	catch (Exception e) {
@@ -98,3 +119,5 @@ public ResponseEntity uploadFile(MultipartHttpServletRequest request,@RequestPar
 	return new ResponseEntity<>("{}", HttpStatus.OK);
 }
 ```
+4. Complete lo que falta del código anterior para insertar un nuevo despacho.
+4. Rectifique que la URL a través de la cual se accedería al recurso antes creado, coincida con la utilizada por el cliente Angular.js (línea 50 del archivo 'modulo.js'). Pruebe la aplicación cargando una imagen pequeña en formato PNG, y luego consultándolo a través de la URI de códigos 'qr' realizada en el punto I.
