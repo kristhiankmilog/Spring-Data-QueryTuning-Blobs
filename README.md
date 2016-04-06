@@ -81,8 +81,8 @@ Realice los puntos 1 y 2, teniendo en cuenta las facilidades de Joins explícito
 
 ##Parte III.##
 
-Ahora, va a crear en su API un servicio capaz de manejar peticiones de tipo 'multipart' (para enviar archivos binarios en lugar de documentos jSON). Esto se basa en una adaptación de dos blogs de [cantangoslutions.com](http://www.cantangosolutions.com/blog/Easy-File-Upload-Using-DropzoneJS-AngularJs-And-Spring) y 
-[uncorkedstudios.com](http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs):
+Ahora, va a crear en su API un servicio capaz de manejar peticiones de tipo 'multipart' (para enviar archivos binarios en lugar de documentos jSON). Esto se basa en una adaptación de dos blogs de [cantangoslutions.com](http://www.cantangosolutions.com/blog/Easy-File-Upload-Using-DropzoneJS-AngularJs-And-Spring) para el 'back-end' y 
+[uncorkedstudios.com](http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs) para el 'front-end':
 
 1. Si los fuentes de su proyecto no incluyen aún el cliente Angular.js, actualícelo con los fuentes de este repositorio (el cliente está en /src/main/resources/static).
 2. En sus servicios de aplicación, agregue una operación que permita registrar un nuevo despacho (la cual debe usar el Repositorio de despachos).
