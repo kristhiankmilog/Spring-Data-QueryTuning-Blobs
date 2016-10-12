@@ -33,7 +33,7 @@ Figura 2 - Modelo de clases mapeado
 3. Revise el controlador de pedidos e identifique con qué URL se pueden consultar las órdenes. De nuevo, pruebe la consulta a través de un navegador. Revise el error presentado, y busque en qué contexto se menciona la palabra 'Lazy'. Para resolver el problema, cambie la manera como JPA realiza las consultas que asocian los objetos relacionados directa e indirectamente con Pedido (DetallePedido, Cliente y Producto) cambiando el mecanismo de 'fetching' que por defecto se dan entre Pedido-Cliente, Pedido-DetallePedido y DetallePedido-Producto:
 
 	```java
-	@Fetch(FetchType.JOIN)
+	 @Fetch(FetchMode.JOIN)
 ```
 4. Pruebe que el API retorne correctamente las ordenes a través de un navegador.
 5. Revise el controlador de Despachos, e identifique la URL para la consultar un determinado despacho. Intente consultar el despacho #1 y analice el error obtenido.
