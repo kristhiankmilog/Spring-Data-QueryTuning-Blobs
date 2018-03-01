@@ -2,6 +2,7 @@ package edu.eci.cosw.samples.model;
 
 // Generated Feb 5, 2013 5:52:11 PM by Hibernate Tools 3.4.0.CR1
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -51,8 +52,10 @@ public class DetallePedido implements java.io.Serializable {
 	public void setId(DetallePedidoId id) {
 		this.id = id;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)        
+        
+        @Fetch(FetchMode.JOIN)
+	@ManyToOne()        
+        
 	@JoinColumn(name = "PRODUCTOS_idproducto", nullable = false, insertable = false, updatable = false)
 	public Producto getProducto() {
 		return this.almProductos;

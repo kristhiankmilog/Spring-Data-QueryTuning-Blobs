@@ -18,6 +18,7 @@ package edu.eci.cosw.examples.productorders;
 
 import edu.eci.cosw.samples.model.Despacho;
 import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,23 @@ public class DispatchController {
             Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    
+    @RequestMapping(value = "/{id}/qrcode", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> getQRCode(@PathVariable Integer id) {
+		try {            
+                return ResponseEntity.ok().contentType(MediaType.parseMediaType("image/png")).body(new InputStreamResource(services.dispatchByID(id).getQrcode().getBinaryStream()));
+            } catch (ServicesException ex) {
+                Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DispatchController.class.getName()).log(Level.SEVERE, null, ex);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    
     }
 
     

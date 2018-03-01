@@ -73,6 +73,7 @@ public class Producto implements java.io.Serializable {
 		this.precio = precio;
 	}
 
+        @JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")        
 	public Set<DetallePedido> getDetallesPedidos() {
 		return this.almDetallesPedidos;

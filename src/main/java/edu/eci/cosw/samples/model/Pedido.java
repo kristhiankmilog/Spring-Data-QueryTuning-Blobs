@@ -64,7 +64,8 @@ public class Pedido implements java.io.Serializable {
 		this.idpedido = idpedido;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+        @Fetch(FetchMode.JOIN)
+	@ManyToOne()
 	@JoinColumn(name = "CLIENTES_idcliente", nullable = false)        
 	public Cliente getCliente() {
 		return this.almClientes;
@@ -84,8 +85,8 @@ public class Pedido implements java.io.Serializable {
 		this.fechaRadicacion = fechaRadicacion;
 	}
 
-
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)        
+        @Fetch(FetchMode.JOIN)
+	@OneToMany(cascade=CascadeType.ALL)        
 	@JoinColumn(name="PEDIDOS_idpedido")
 	public Set<DetallePedido> getDetallesPedidos() {
 		return this.almDetallesPedidos;

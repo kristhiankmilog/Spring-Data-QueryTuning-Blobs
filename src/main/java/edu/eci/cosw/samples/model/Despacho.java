@@ -47,6 +47,7 @@ public class Despacho implements java.io.Serializable {
 		this.qrcode = qrcode;
 	}
 
+        
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "iddespacho", unique = true, nullable = false)
@@ -58,7 +59,9 @@ public class Despacho implements java.io.Serializable {
 		this.iddespacho = iddespacho;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)        
+        
+        @Fetch(FetchMode.JOIN)
+	@ManyToOne()        
 	@JoinColumn(name = "PEDIDOS_idpedido", nullable = false)
 	public Pedido getPedidos() {
 		return this.almPedidos;
@@ -68,7 +71,9 @@ public class Despacho implements java.io.Serializable {
 		this.almPedidos = almPedidos;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)        
+        
+        @Fetch(FetchMode.JOIN)
+	@ManyToOne()        
 	@JoinColumn(name = "VEHICULOS_placa", nullable = false)
 	public Vehiculo getVehiculo() {
 		return this.almVehiculos;
@@ -77,7 +82,8 @@ public class Despacho implements java.io.Serializable {
 	public void setVehiculo(Vehiculo almVehiculos) {
 		this.almVehiculos = almVehiculos;
 	}
-
+        
+        @JsonIgnore
 	@Column(name = "qrcode")
 	public Blob getQrcode() {
 		return this.qrcode;
